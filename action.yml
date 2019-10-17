@@ -1,0 +1,21 @@
+name: 'Slack Message Builder'
+description: 'Post simple message to slack'
+inputs:
+  slack-webhook-url:
+    description: Incoming webhook for slack
+    required: true
+  message:
+    description: Main message body
+    required: true
+  context:
+    description: Smaller context text for the message
+    required: false
+  button-text:
+    description: Text label for the button
+    required: false
+  button-url:
+    description: URL for the button
+    required: false
+runs:
+  using: 'node12'
+  main: 'main.js'
