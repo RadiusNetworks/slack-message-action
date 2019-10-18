@@ -18,48 +18,59 @@ function post(url, body) {
   });
 }
 
+function sectionBlock(text) {
+  return {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": text,
+    }
+  };
+}
+
+function contextBlock(text) {
+  return {
+    "type": "context",
+    "elements": [
+      {
+        "type": "mrkdwn",
+        "text": text
+      }
+    ]
+  };
+}
+
+function buttonBlock(text, url) {
+  return {
+    "type": "actions",
+    "elements": [
+      {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "text": text,
+          "emoji": true
+        },
+        "url": url
+      }
+    ]
+  };
+}
+
 function build(section, context, buttonText, buttonUrl) {
   blocks = []
 
   if (section) {
-    blocks.push({
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": section,
-      }
-    });
+    blocks.push(sectionBlock(section));
   }
+
   if (context) {
-    blocks.push({
-      "type": "context",
-      "elements": [
-        {
-          "type": "mrkdwn",
-          "text": context
-        }
-      ]
-    });
+    blocks.push(contextBlock(context));
   }
 
-  if (buttonText) {
-    blocks.push({
-      "type": "actions",
-      "elements": [
-        {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": buttonText,
-            "emoji": true
-          },
-           "url": buttonUrl
-        }
-      ]
-    });
-
+  if (buttonText && buttonUrl) {
+    blocks.push(buttonBlock(buttonText, buttonUrl));
   }
-
 
   return {
     "blocks": blocks
@@ -76,6 +87,5 @@ async function main() {
   body = build(message, context, buttonText, buttonUrl);
   console.log("Posting to slack");
   post(slackUrl, body);
-
 }
 
