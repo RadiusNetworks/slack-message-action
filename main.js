@@ -57,7 +57,7 @@ function buttonBlock(text, url) {
   };
 }
 
-function build(section, context, buttonText, buttonUrl) {
+function build(summary, section, context, buttonText, buttonUrl) {
   blocks = []
 
   if (section) {
@@ -73,18 +73,20 @@ function build(section, context, buttonText, buttonUrl) {
   }
 
   return {
+    "text": summary,
     "blocks": blocks
   }
 }
 
 async function main() {
   const slackUrl = core.getInput('slack-webhook-url');
+  const summary = core.getInput('summary');
   const message = core.getInput('message');
   const context = core.getInput('context');
   const buttonUrl = core.getInput('button-url');
   const buttonText = core.getInput('button-text');
 
-  body = build(message, context, buttonText, buttonUrl);
+  body = build(summary, message, context, buttonText, buttonUrl);
   console.log("Posting to slack");
   post(slackUrl, body);
 }

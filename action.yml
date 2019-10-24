@@ -7,6 +7,9 @@ inputs:
   message:
     description: Main message body
     required: true
+  summary:
+    description: Notification preview summary
+    required: false
   context:
     description: Smaller context text for the message
     required: false
